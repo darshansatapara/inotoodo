@@ -105,12 +105,12 @@ router.post(
 
 router.post("/getuser", fatchuser, async (req, res) => {
   try {
-    userId = req.user;
+    userId = req.user; 
     const user = await User.findById(userId).select("-password");
     res.send(user);
   } catch (error) {
     console.error(error.message);
-    res.status(200).send('Success'); 
+    res.status(401).send('please authenticate valid informstion'); 
   }
 });
 
