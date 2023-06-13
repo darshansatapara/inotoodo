@@ -1,19 +1,19 @@
 const express = require("express");
-const User = require("../models/user");
+const User = require("../models/User");
 const { body, validationResult } = require("express-validator");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
 const JWT_secret = "hellomylife$code";
 const jwt = require("jsonwebtoken");
-const fatchuser=require('../middelware/fatchuser');
+const fatchuser = require("../middelware/fatchuser");
 
 //rout1:create a user
 router.post(
   "/create",
   [
-    body("name").isLength({ min: 3 }),
-    body("email").isEmail(),
-    body("password").isLength({ min: 5 }),
+    body("name",'Enter a valid name').isLength({ min: 3 }),
+    body("email",'Enter a valid email id').isEmail(),
+    body("password",'password must be 5 charactors').isLength({ min: 5 }),
   ],
   async (req, res) => {
     //  if there is error we return bad error
@@ -105,12 +105,13 @@ router.post(
 
 router.post("/getuser", fatchuser, async (req, res) => {
   try {
-    userId = req.user; 
-    const user = await User.findById(userId).select("-password");
+    const userId = req.user.id;
+    let user = await User.findById(userId).select("-password");
+
     res.send(user);
   } catch (error) {
     console.error(error.message);
-    res.status(401).send('please authenticate valid informstion'); 
+    return res.status(500).send("Internal server error");
   }
 });
 
