@@ -1,58 +1,86 @@
 import { useState } from "react";
 import noteContaxt from "./noteContaxt";
 
+const NoteState = (props) => {
+  const host = "https://localhost:5000";
+  const notesInitial = [];
 
-const NoteState= (props)=>{
-    const notesInitial=[
-        {
-            "_id": "64881332e5d811b36e778e75",
-            "user": "64831c1844fa97ac8d221ec4",
-            "title": "my 2 title",
-            "description": "hey this is is first time to wright. ",
-            "tag": "1",
-            "__v": 0
-          },
-        {
-            "_id": "64881332e5d811b36e778e70",
-            "user": "64831c1844fa97ac8d221ec4",
-            "title": "my 2 title",
-            "description": "hey this is is first time to wright. ",
-            "tag": "1",
-            "__v": 0
-          },
-        {
-            "_id": "64881332e5d811b36e778e88",
-            "user": "64831c1844fa97ac8d221ec4",
-            "title": "my 2 title",
-            "description": "hey this is is first time to wright. ",
-            "tag": "1",
-            "__v": 0
-          },
-          {
-            "_id": "6489cd53ee4a274edbbe6665",
-            "user": "64831c1844fa97ac8d221ec4",
-            "title": "my 22 title",
-            "description": "hey  i wish you all the best. ",
-            "tag": "11",
-            "__v": 0
-          },
-          {
-            "_id": "6489cd55ee4a274edbbe6667",
-            "user": "64831c1844fa97ac8d221ec4",
-            "title": "my 22 title",
-            "description": "hey  i wish you all the best. ",
-            "tag": "11",
-            "__v": 0
-          },
-    ]
+  const [notes, setnotes] = useState(notesInitial);
 
-    const [notes , setnotes] = useState(notesInitial);
+  //getall  note
+  const getnote = async () => {
+    const response = await fetch(`${host}/api/notes/fatchallnotes`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjQ4MzFjMTg0NGZhOTdhYzhkMjIxZWM0In0sImlhdCI6MTY4NjY2MTAxN30.kDb3C7fe72wnXMV05iEOWTax0_GZlm_nLshsDnz6KkM",
+      },
+    });
+    const json = await response.json();
+    setnotes(json);
+  };
+  //Add a note
+  const addnote = async (title, description, tag) => {
+    const response = await fetch(`${host}/api/notes/addnote`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjQ4MzFjMTg0NGZhOTdhYzhkMjIxZWM0In0sImlhdCI6MTY4NjY2MTAxN30.kDb3C7fe72wnXMV05iEOWTax0_GZlm_nLshsDnz6KkM",
+      },
+      body: JSON.stringify({ title, description, tag }),
+    });
 
-    return(
-            <noteContaxt.Provider value={{notes,setnotes}}>
-                {props.children}
-            </noteContaxt.Provider>
-    )
-}
+    const note = {
+      _id: "6489cd55ee4a274edbbe6668",
+      user: "64831c1844fa97ac8d221ec4",
+      title: title,
+      description: description,
+      tag: tag,
+      __v: 0,
+    };
+    setnotes(notes.concat(note));
+  };
+
+  //Delet a note
+  const deletenote = (id) => {
+    //API call
+    const newNotes = notes.filter((note) => {
+      return note._id !== id;
+    });
+    setnotes(newNotes);
+  };
+
+  //Edit a note
+  const editnote = async (id, title, description, tag) => {
+    //API call
+    const response = await fetch(`${host}/api/notes/updatenote/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token":
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjQ4MzFjMTg0NGZhOTdhYzhkMjIxZWM0In0sImlhdCI6MTY4NjY2MTAxN30.kDb3C7fe72wnXMV05iEOWTax0_GZlm_nLshsDnz6KkM",
+      },
+      body: JSON.stringify({ title, description, tag }),
+    });
+
+    //logic for edtining
+    for (let index = 0; index < notes.length; index++) {
+      const element = notes[index];
+      if (element._id === id) {
+        element.title = title;
+        element.description = description;
+        element.tag = tag;
+      }
+    }
+  };
+
+  return (
+    <noteContaxt.Provider
+      value={{ notes, setnotes, addnote, deletenote, editnote,getnote }}
+    >
+      {props.children}
+    </noteContaxt.Provider>
+  );
+};
 
 export default NoteState;

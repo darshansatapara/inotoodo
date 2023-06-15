@@ -5,7 +5,7 @@ import Navbar from './component/Navbar';
 import About from './component/About';
 import Home from './component/Home';
 import NoteState from './contaxt/notes/NoteState';
-import Alert from './component/Alert';
+import Alert from './component/alert';
 
 
 
@@ -14,8 +14,8 @@ function App() {
   return (
     <NoteState>
       <BrowserRouter>
-        <Alert/>
         <Navbar />
+        <Alert/>
         <div className="container">
           <Routes>
             <Route path="/" element={<Home />} />
