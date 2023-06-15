@@ -12,5 +12,5 @@ app.use('/api/auth',require('./routs/auth'))
 app.use('/api/notes',require('./routs/notes'))
 
 app.listen(port, () => {
-  console.log(`Example app listening on port http://localhost:${port}`)
+  console.log(`inotoodo back-end listening on port http://localhost:${port}`)
 })
