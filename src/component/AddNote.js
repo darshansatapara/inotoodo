@@ -32,10 +32,9 @@ function AddNote() {
             <label htmlFor="description" className="form-label">Description</label>
             <input type="text" className="form-control" id="description" name='description' onChange={onchange} />
           </div>
-          <button type="submit" className="btn btn-primary my-2" onClick={onhandleclick}>Add Note</button>
+          <button type="submit" disabled={note.title.length < 5 || note.description.length < 5} className="btn btn-primary my-2" onClick={onhandleclick}>Add Note</button>
         </form>
       </div>      
-    
     </div>
     </div>
   )
