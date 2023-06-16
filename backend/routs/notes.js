@@ -78,7 +78,7 @@ router.put("/updatenote/:id", fatchuser, async (req, res) => {
 
 });
 //Route4: delet note using : delet "/api/notes/deletnote" , Login require.
-router.delete("/updatenote/:id", fatchuser, async (req, res) => {
+router.delete("/deletenote/:id", fatchuser, async (req, res) => {
     try {
         const { title, description, tag } = req.body;
         //create a new object

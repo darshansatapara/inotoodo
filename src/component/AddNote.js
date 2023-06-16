@@ -18,7 +18,11 @@ function AddNote() {
         <div className='container'>
       <div className='container my-3'>
         <form>
-          <h2>Add a Note</h2>
+          <h3>Add a Note</h3>
+          <div className="mb-3">
+            <label htmlFor="tag" className="form-label">Tag</label>
+            <input type="text" className="form-control" id="tag" name='tag' onChange={onchange} />
+          </div>
           <div className="mb-3">
             <label htmlFor="title" className="form-label">Title</label>
             <input type="text" className="form-control" id="title" name='title' onChange={onchange} />
@@ -27,10 +31,6 @@ function AddNote() {
           <div className="mb-3">
             <label htmlFor="description" className="form-label">Description</label>
             <input type="text" className="form-control" id="description" name='description' onChange={onchange} />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="tag" className="form-label">Tag</label>
-            <input type="text" className="form-control" id="tag" name='tag' onChange={onchange} />
           </div>
           <button type="submit" className="btn btn-primary my-2" onClick={onhandleclick}>Add Note</button>
         </form>
