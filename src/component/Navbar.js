@@ -25,8 +25,8 @@ const Navbar = () => {
               </li>
             </ul>
             <form className="d-flex">
-              <Link to="/login" class="btn btn-primary mx-2 " role="button" aria-disabled="true">login</Link>
-              <Link to="signup" class="btn btn-primary mx-2 " role="button" aria-disabled="true">Sing Up</Link>
+              <Link to="/login" className="btn btn-primary mx-2 " role="button" aria-disabled="true">login</Link>
+              <Link to="signup" className="btn btn-primary mx-2 " role="button" aria-disabled="true">Sing Up</Link>
             </form>
           </div>
         </div>

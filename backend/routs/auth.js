@@ -13,7 +13,7 @@ router.post(
   [
     body("name",'Enter a valid name').isLength({ min: 3 }),
     body("email",'Enter a valid email id').isEmail(),
-    body("password",'password must be 5 charactors').isLength({ min: 5 }),
+    body("password",'password at-least 5 charactors').isLength({ min: 5 }),
   ],
   async (req, res) => {
     //  if there is error we return bad error
@@ -72,17 +72,21 @@ router.post(
     const { email, password } = req.body;
     try {
       let user = await User.findOne({ email });
+      let success=false;
       if (!user) {
+        success=false;
         return res
           .status(400)
-          .json({ error: "please try with correct credentials.. " });
+          .json({ success,error: "please try with correct credentials " });
       }
 
-      const comparePass = bcrypt.compare(password, user.password);
-      if (!comparePass) {
-        return res
-          .status(400)
-          .json({ error: "please try with correct credentials.. " });
+      const passwordCompare = await bcrypt.compare(password, user.password);
+      if (!passwordCompare) {
+        success = false;
+        return res.status(400).json({
+          success,
+          errors: "Please try to login with correct credentials",
+        });
       }
 
       const data = {
@@ -92,7 +96,8 @@ router.post(
       };
       const authtoken = jwt.sign(data, JWT_secret);
       // generate the auth token
-      return res.send({ authtoken });
+      success=true;
+      return res.send({ success ,authtoken });
     } catch (error) {
       //if internal error is availble we throw an error
       console.error(error.message);
