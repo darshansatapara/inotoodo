@@ -2,14 +2,15 @@ import React,{useContext, useState} from 'react'
 import noteContaxt from '../contaxt/notes/noteContaxt';
 
 
-function AddNote() {
+function AddNote(props) {
     const context = useContext(noteContaxt);
     const { addnote } = context;
     const [note, setNote] = useState({title:"", description:"", tag:""});
     const onhandleclick=(e)=>{
       e.preventDefault();
-       addnote(note.title,note.description,note.tag);
-       setNote({ title: "", tag: "", description: "" })
+      addnote(note.title,note.description,note.tag);
+      setNote({ title: "", tag: "", description: "" });
+      props.showAlert("Added Succesfully","success")
     }
     const onchange=(e)=>{
       setNote({ ...note, [e.target.name]: e.target.value });

@@ -4,7 +4,7 @@ import NoteItem from './NoteItem';
 import AddNote from './AddNote';
 
 
-const Notes = () => {
+const Notes = (props) => {
     const context = useContext(noteContaxt);
     const { notes, getnote, editnote } = context;
     const [note, setNote] = useState({
@@ -27,13 +27,14 @@ const Notes = () => {
             tag: currentNote.tag,
         });
     };
+    
     const onhandleclick = (e) => {
         editnote(note.id, note.title, note.description, note.tag);
         refClose.current.click();
-        
-
+        props.showAlert("update Succesfully", "success");
 
     }
+
     const onchange = (e) => {
         setNote({ ...note, [e.target.name]: e.target.value });
 
@@ -42,7 +43,8 @@ const Notes = () => {
 
     return (
         <>
-            <AddNote />
+            <AddNote showAlert={props.showAlert} />
+
             <button ref={ref} type="button" className="d-none btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Launch demo modal
             </button>
@@ -57,7 +59,7 @@ const Notes = () => {
                         </div>
                         <div className="modal-body">
                             <form>
-                                <h3>Add a Note</h3>
+                                <h3>Edit Note here</h3>
                                 <div className="mb-3">
                                     <label htmlFor="tag" className="form-label">Tag</label>
                                     <input type="text" className="form-control" id="tag" name='tag' value={note.tag} onChange={onchange} />
@@ -75,7 +77,7 @@ const Notes = () => {
                                 <div className="modal-footer">
                                     <button ref={refClose} type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                     <button onClick={onhandleclick} disabled={note.title.length < 5 || note.description.length < 5}
-                                        type="button" className="btn btn-primary" >Update Note</button>
+                                        type="button" className="btn btn-primary"  >Update Note</button>
                                 </div>
 
                             </form>
@@ -95,6 +97,8 @@ const Notes = () => {
                             key={note._id}
                             updateNote={updateNote}
                             note={note}
+                            showAlert={props.showAlert}
+                            
                         />
                     );
                 })}

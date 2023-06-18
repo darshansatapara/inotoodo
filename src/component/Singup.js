@@ -26,12 +26,10 @@ const Singup = (props) => {
     if (json.success) {
       // Save the auth token and redirect
       localStorage.setItem("token", json.authToken);
-      props.showAlert("Account Created successfully", "success");
       navigate("/");
-      alert("Account created")
     } else {
       
-      props.showAlert("Invalid Details", "danger");
+      props.showAlert("Account alrady exist", "danger");
     }
   };
 
