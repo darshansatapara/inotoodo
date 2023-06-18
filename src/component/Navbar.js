@@ -1,12 +1,13 @@
 // import React, { useEffect } from 'react'
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  let navigate = useNavigate();
   let location = useLocation();
-  //for the see path name
-  // useEffect(()=>{
-  //   console.log(location.pathname)
-  // },[location])
+  const handleLogout=()=>{
+        localStorage.removeItem("token") 
+        navigate("/login")
+  }
   return (
     <div>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -17,17 +18,27 @@ const Navbar = () => {
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <Link to="/" className={`nav-link ${location.pathname === "/" ? "active" : ""}`} aria-current="page" >Home</Link>
-              </li>
+              </li> */}
               <li className="nav-item">
                 <Link to="/about" className={`nav-link ${location.pathname === "/about" ? "active" : ""}`} >about</Link>
               </li>
             </ul>
-            <form className="d-flex">
-              <Link to="/login" className="btn btn-primary mx-2 " role="button" aria-disabled="true">login</Link>
-              <Link to="signup" className="btn btn-primary mx-2 " role="button" aria-disabled="true">Sing Up</Link>
-            </form>
+            {!localStorage.getItem("token") ? (
+            <div>
+              <Link className="btn btn-primary mx-2" to="/login" role="button">
+                Login
+              </Link>
+              <Link className="btn btn-primary mx-2" to="/signup" role="button">
+                Signup
+              </Link>
+            </div>
+          ) : (
+            <button onClick={handleLogout} className="btn btn-primary">
+              Logout
+            </button>
+          )}
           </div>
         </div>
       </nav>
@@ -36,4 +47,4 @@ const Navbar = () => {
   )
 }
 
-export default Navbar
+export default Navbar;

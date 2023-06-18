@@ -16,12 +16,13 @@ const Notes = (props) => {
         tag: "",
     });
     useEffect(() => {
-        if (localStorage.getItem("authToken")) {
-        getnote();
+        if (localStorage.getItem("token")) {
+            getnote();
         } else {
             navigate("/login");
         }
-    },[])
+        // eslint-disable-next-line
+    }, []);
     const ref = useRef(null);
     const refClose = useRef(null);
     const updateNote = (currentNote) => {
@@ -33,7 +34,7 @@ const Notes = (props) => {
             tag: currentNote.tag,
         });
     };
-    
+
     const onhandleclick = (e) => {
         editnote(note.id, note.title, note.description, note.tag);
         refClose.current.click();
@@ -104,7 +105,7 @@ const Notes = (props) => {
                             updateNote={updateNote}
                             note={note}
                             showAlert={props.showAlert}
-                            
+
                         />
                     );
                 })}

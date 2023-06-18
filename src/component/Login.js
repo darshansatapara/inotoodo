@@ -17,21 +17,23 @@ const Login = (props) => {
                 email: credentials.email,
                 password: credentials.password,
             }),
+           
         });
         const json = await response.json();
-        console.log(json);
+        // console.log(json);
   
     
         if (json.success) {
             // Save the auth token and redirect
-            localStorage.setItem("token", json.authToken);
+            localStorage.setItem("token", json.authtoken);
             props.showAlert("Logged in successfully", "success");
             navigate("/");
+            
           } else {
             props.showAlert("Invalid credentials", "danger");
-            
           }
-  };
+        };
+  
 
     const onchange = (e) => {
         setcredentials({ ...credentials, [e.target.name]: e.target.value });
@@ -50,7 +52,7 @@ const Login = (props) => {
                     <input type="password" placeholder='Password at-least 5 charactors ' name='password' className="form-control" onChange={onchange} id="password" value={credentials.password} />
                 </div>
 
-                <button type="submit" className="btn btn-primary"><b>Submit</b></button>
+                <button type="submit" className="btn btn-primary"><b>login</b></button>
             </form>
         </div>
     )
