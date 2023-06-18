@@ -2,9 +2,11 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 import noteContaxt from '../contaxt/notes/noteContaxt';
 import NoteItem from './NoteItem';
 import AddNote from './AddNote';
+import { useNavigate } from 'react-router-dom';
 
 
 const Notes = (props) => {
+    let navigate = useNavigate();
     const context = useContext(noteContaxt);
     const { notes, getnote, editnote } = context;
     const [note, setNote] = useState({
@@ -14,8 +16,12 @@ const Notes = (props) => {
         tag: "",
     });
     useEffect(() => {
+        if (localStorage.getItem("authToken")) {
         getnote();
-    }, []);
+        } else {
+            navigate("/login");
+        }
+    },[])
     const ref = useRef(null);
     const refClose = useRef(null);
     const updateNote = (currentNote) => {

@@ -40,8 +40,8 @@ const Singup = (props) => {
   return (
     <div>
        <h1>Create an account to use Inotoodo</h1>
-      <form onSubmit={handleSubmit}>
-
+      <div className="my-2">
+      <form onSubmit={handleSubmit} > 
         <div className="mb-3" >
           <label htmlFor="name" className="form-label">User Name</label>
           <input required type="text" className="form-control" value={credentials.name} onChange={onchange} id="name" name='name' placeholder='Enter Name' />
@@ -60,6 +60,7 @@ const Singup = (props) => {
 
         <button type="submit" className="btn btn-primary">Submit</button>
       </form>
+    </div>
     </div>
   )
 }

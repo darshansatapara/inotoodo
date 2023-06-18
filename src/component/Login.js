@@ -38,19 +38,19 @@ const Login = (props) => {
 
     }
     return (
-        <div>
+        <div className='my-4'>
             <form onSubmit={handleSubmit}>
                 <div className="mb-3" >
-                    <label htmlFor="email" className="form-label">Email address</label>
+                    <label htmlFor="email" className="form-label"><b>Email address</b>:</label>
                     <input type="email" className="form-control" value={credentials.email} onChange={onchange} id="email" name='email' aria-describedby="emailHelp" placeholder='email@gmail.com' />
 
                 </div>
                 <div className="mb-3">
-                    <label htmlFor="password" className="form-label">Password</label>
+                    <label htmlFor="password" className="form-label"><b>Password</b>:</label>
                     <input type="password" placeholder='Password at-least 5 charactors ' name='password' className="form-control" onChange={onchange} id="password" value={credentials.password} />
                 </div>
 
-                <button type="submit" className="btn btn-primary">Submit</button>
+                <button type="submit" className="btn btn-primary"><b>Submit</b></button>
             </form>
         </div>
     )
